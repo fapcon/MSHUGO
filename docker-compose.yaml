@@ -1,0 +1,57 @@
+version: '3'
+
+services:
+  hugo:
+    image: klakegg/hugo:0.101.0-ext-alpine
+    container_name: hugoco
+    command: server
+    entrypoint: hugo
+    volumes:
+      - "./hugo:/src"
+    ports:
+      - "1313:1313"
+    networks:
+      - mylocal
+  app:
+    build: ./proxy
+    container_name: proxyco
+    volumes:
+      - "./hugo/content:/app/static"
+    ports:
+      - "8080:8080"
+    networks:
+      - mylocal
+  auth:
+    build: ./auth
+    container_name: authco
+    networks:
+      - mylocal
+  geo:
+    build: ./geo
+    container_name: geoco
+    networks:
+      - mylocal
+  user:
+    build: ./user
+    container_name: userco
+    networks:
+      - mylocal
+    depends_on:
+      - db
+  db:
+    image: postgres
+    environment:
+      POSTGRES_PASSWORD: password
+      POSTGRES_USER: userpostgres
+      POSTGRES_DB: userserv
+    networks:
+      - mylocal
+  redis:
+    image: redis
+    networks:
+      - mylocal
+
+
+networks:
+  mylocal:
+    driver: bridge
