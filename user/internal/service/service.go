@@ -3,9 +3,9 @@ package service
 import (
 	"fmt"
 
-	"MSHUGO/user/internal/models"
-	"MSHUGO/user/internal/repository"
 	"log"
+	"user/internal/models"
+	"user/internal/repository"
 )
 
 type UserService struct {
@@ -17,7 +17,7 @@ func NewUserService(repo *repository.UserRepo) *UserService {
 }
 
 func (u *UserService) Create(email, hashepassword string) (string, error) {
-	err := u.Repo.CreateUser(email, hashepassword)
+	err := u.Repo.Create(email, hashepassword)
 	if err != nil {
 		log.Println("err:", err)
 		return "", err
@@ -26,7 +26,7 @@ func (u *UserService) Create(email, hashepassword string) (string, error) {
 }
 
 func (u *UserService) Check(email, password string) error {
-	err := u.Repo.CheckUser(email, password)
+	err := u.Repo.Check(email, password)
 	if err != nil {
 		return err
 	}
@@ -34,7 +34,7 @@ func (u *UserService) Check(email, password string) error {
 }
 
 func (u *UserService) Profile(email string) (*models.UserDTO, error) {
-	user, err := u.Repo.ProfileUser(email)
+	user, err := u.Repo.Profile(email)
 	if err != nil {
 		log.Println("err:", err)
 		return nil, err
@@ -43,7 +43,7 @@ func (u *UserService) Profile(email string) (*models.UserDTO, error) {
 }
 
 func (u *UserService) List() ([]models.UserDTO, error) {
-	users, err := u.Repo.ListUsers()
+	users, err := u.Repo.List()
 	if err != nil {
 		log.Println("err:", err)
 		return nil, err

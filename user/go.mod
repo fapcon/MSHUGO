@@ -1,4 +1,4 @@
-module MSHUGO/user
+module user
 
 go 1.19
 

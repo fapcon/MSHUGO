@@ -1,13 +1,13 @@
 package user
 
 import (
-	"MSHUGO/proxy/internal/grpc/grpcclient"
-	"MSHUGO/proxy/internal/models"
 	"context"
 	"encoding/json"
 	userpr "github.com/fapcon/MSHUGOprotos/protos/user/gen"
 	"log"
 	"net/http"
+	"proxy/internal/grpc/grpcclient"
+	"proxy/internal/models"
 )
 
 type HandleUser struct {
@@ -18,11 +18,11 @@ func NewHandleUser(clUser *grpcclient.ClientUser) *HandleUser {
 	return &HandleUser{clUser}
 }
 
-func (h *HandleUser) ProfileUser(w http.ResponseWriter, r *http.Request) {
-	email := "@example"
+func (h *HandleUser) Profile(w http.ResponseWriter, r *http.Request) {
+	email := "qwer"
 	req := &userpr.ProfileRequest{Email: email}
 
-	res, err := h.clientuser.CallProfileUser(context.Background(), req)
+	res, err := h.clientuser.CallProfile(context.Background(), req)
 	if err != nil {
 		log.Println("err:", err)
 		http.Error(w, "err serv", http.StatusInternalServerError)
@@ -39,10 +39,10 @@ func (h *HandleUser) ProfileUser(w http.ResponseWriter, r *http.Request) {
 	w.Write(jsData)
 }
 
-func (h *HandleUser) ListUsers(w http.ResponseWriter, r *http.Request) {
+func (h *HandleUser) List(w http.ResponseWriter, r *http.Request) {
 
 	req := &userpr.ListRequest{}
-	res, err := h.clientuser.CallListUsers(context.Background(), req)
+	res, err := h.clientuser.CallList(context.Background(), req)
 	if err != nil {
 		log.Println("err:", err)
 		http.Error(w, "err serv", http.StatusInternalServerError)

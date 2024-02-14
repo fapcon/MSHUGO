@@ -13,7 +13,7 @@ func NewClientGeo() *ClientGeo {
 	return &ClientGeo{}
 }
 
-func (c *ClientGeo) CallSearchAddress(ctx context.Context, req *geopr.SearchRequest) (*geopr.SearchResponse, error) {
+func (c *ClientGeo) CallSearch(ctx context.Context, req *geopr.SearchRequest) (*geopr.SearchResponse, error) {
 	conn, err := grpc.Dial("geo:50051", grpc.WithInsecure())
 	if err != nil {
 		log.Fatalf("Ошибка при подключении к серверу: %v", err)
@@ -31,7 +31,7 @@ func (c *ClientGeo) CallSearchAddress(ctx context.Context, req *geopr.SearchRequ
 	return res, nil
 }
 
-func (c *ClientGeo) CallGeocodeAddress(ctx context.Context, req *geopr.GeocodeRequest) (*geopr.GeocodeResponse, error) {
+func (c *ClientGeo) CallGeocode(ctx context.Context, req *geopr.GeocodeRequest) (*geopr.GeocodeResponse, error) {
 	conn, err := grpc.Dial("geo:50051", grpc.WithInsecure())
 	if err != nil {
 		log.Fatalf("Ошибка при подключении к серверу: %v", err)

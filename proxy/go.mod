@@ -1,4 +1,4 @@
-module MSHUGO/proxy
+module proxy
 
 go 1.19
 

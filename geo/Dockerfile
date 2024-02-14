@@ -2,7 +2,7 @@ FROM golang:1.19-alpine as builder
 
 WORKDIR /app
 
-COPY internal .
+COPY . .
 
 RUN go mod tidy
 

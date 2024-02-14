@@ -1,17 +1,17 @@
 package user
 
 import (
-	"MSHUGO/user/internal/models"
-	"MSHUGO/user/internal/service"
 	"context"
 	userpr "github.com/fapcon/MSHUGOprotos/protos/user/gen"
+	"user/internal/models"
+	"user/internal/service"
 )
 
 type ServicerUser interface {
-	CreateUser(email, password string) (string, error)
-	CheckUser(email, password string) error
-	ProfileUser(email string) (*models.UserDTO, error)
-	ListUsers() (*[]models.UserDTO, error)
+	Create(email, password string) (string, error)
+	Check(email, password string) error
+	Profile(email string) (*models.UserDTO, error)
+	List() (*[]models.UserDTO, error)
 }
 
 type ServiceUser struct {
@@ -23,7 +23,7 @@ func NewServiceUser(usservice *service.UserService) *ServiceUser {
 	return &ServiceUser{us: usservice}
 }
 
-func (s *ServiceUser) CreateUser(ctx context.Context, req *userpr.CreateRequest) (*userpr.CreateResponse, error) {
+func (s *ServiceUser) Create(ctx context.Context, req *userpr.CreateRequest) (*userpr.CreateResponse, error) {
 	message, err := s.us.Create(req.Email, req.Hashedpassword)
 	if err != nil {
 		return nil, err
@@ -31,7 +31,7 @@ func (s *ServiceUser) CreateUser(ctx context.Context, req *userpr.CreateRequest)
 	return &userpr.CreateResponse{Message: message}, nil
 }
 
-func (s *ServiceUser) CheckUser(ctx context.Context, req *userpr.CheckRequest) (*userpr.CheckResponse, error) {
+func (s *ServiceUser) Check(ctx context.Context, req *userpr.CheckRequest) (*userpr.CheckResponse, error) {
 	err := s.us.Check(req.Email, req.Password)
 	if err != nil {
 		return nil, err
@@ -39,7 +39,7 @@ func (s *ServiceUser) CheckUser(ctx context.Context, req *userpr.CheckRequest) (
 	return &userpr.CheckResponse{}, nil
 }
 
-func (s *ServiceUser) ProfileUser(ctx context.Context, req *userpr.ProfileRequest) (*userpr.ProfileResponse, error) {
+func (s *ServiceUser) Profile(ctx context.Context, req *userpr.ProfileRequest) (*userpr.ProfileResponse, error) {
 	user, err := s.us.Profile(req.Email)
 	if err != nil {
 		return nil, err
@@ -48,7 +48,7 @@ func (s *ServiceUser) ProfileUser(ctx context.Context, req *userpr.ProfileReques
 
 	return &userpr.ProfileResponse{User: p}, nil
 }
-func (s *ServiceUser) ListUsers(ctx context.Context, req *userpr.ListRequest) (*userpr.ListResponse, error) {
+func (s *ServiceUser) List(ctx context.Context, req *userpr.ListRequest) (*userpr.ListResponse, error) {
 	users, err := s.us.List()
 	if err != nil {
 		return nil, err

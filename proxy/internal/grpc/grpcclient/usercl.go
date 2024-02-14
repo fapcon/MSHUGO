@@ -13,7 +13,7 @@ func NewClientUser() *ClientUser {
 	return &ClientUser{}
 }
 
-func (c *ClientUser) CallProfileUser(ctx context.Context, req *userpr.ProfileRequest) (*userpr.ProfileResponse, error) {
+func (c *ClientUser) CallProfile(ctx context.Context, req *userpr.ProfileRequest) (*userpr.ProfileResponse, error) {
 
 	conn, err := grpc.Dial("user:50053", grpc.WithInsecure())
 	if err != nil {
@@ -29,7 +29,7 @@ func (c *ClientUser) CallProfileUser(ctx context.Context, req *userpr.ProfileReq
 	return res, nil
 }
 
-func (c *ClientUser) CallListUsers(ctx context.Context, req *userpr.ListRequest) (*userpr.ListResponse, error) {
+func (c *ClientUser) CallList(ctx context.Context, req *userpr.ListRequest) (*userpr.ListResponse, error) {
 
 	conn, err := grpc.Dial("user:50053", grpc.WithInsecure())
 	if err != nil {

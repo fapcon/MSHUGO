@@ -1,19 +1,19 @@
 package repository
 
 import (
-	"MSHUGO/user/internal/models"
 	"fmt"
 	"github.com/jmoiron/sqlx"
 	_ "github.com/lib/pq"
 	"golang.org/x/crypto/bcrypt"
 	"log"
+	"user/internal/models"
 )
 
 type UserRepository interface {
-	CreateUser(email, hashepassword string) error
-	CheckUser(email, password string) error
-	ProfileUser(email string) (*models.UserDTO, error)
-	ListUsers() (*[]models.UserDTO, error)
+	Create(email, hashepassword string) error
+	Check(email, password string) error
+	Profile(email string) (*models.UserDTO, error)
+	List() (*[]models.UserDTO, error)
 }
 
 type UserRepo struct {
@@ -24,9 +24,9 @@ func NewUserRepo(db *sqlx.DB) *UserRepo {
 	return &UserRepo{db}
 }
 
-func (u *UserRepo) CreateUser(email, hashepassword string) error {
-	query := `INSERT INTO users (email, hashepassword) VALUES ($1, $2)`
-	result, err := u.Postgres.Exec(query, email, hashepassword)
+func (u *UserRepo) Create(email, hashedpassword string) error {
+	query := `INSERT INTO users (email, hashedpassword) VALUES ($1, $2)`
+	result, err := u.Postgres.Exec(query, email, hashedpassword)
 	if err != nil {
 		return fmt.Errorf("failed to create user: %v", err)
 	}
@@ -41,9 +41,9 @@ func (u *UserRepo) CreateUser(email, hashepassword string) error {
 
 }
 
-func (u *UserRepo) CheckUser(email, password string) error {
+func (u *UserRepo) Check(email, password string) error {
 	var user models.User
-	query := `SELECT id, email, hashepassword FROM users WHERE email = $1`
+	query := `SELECT id, email, hashedpassword FROM users WHERE email = $1`
 	err := u.Postgres.Get(&user, query, email)
 	if err != nil {
 		log.Println("err not found user")
@@ -58,7 +58,7 @@ func (u *UserRepo) CheckUser(email, password string) error {
 	return nil
 }
 
-func (u *UserRepo) ProfileUser(email string) (*models.UserDTO, error) {
+func (u *UserRepo) Profile(email string) (*models.UserDTO, error) {
 	var user models.UserDTO
 	query := `SELECT id, email FROM users WHERE email = $1`
 	err := u.Postgres.Get(&user, query, email)
@@ -70,7 +70,7 @@ func (u *UserRepo) ProfileUser(email string) (*models.UserDTO, error) {
 	return &user, nil
 }
 
-func (u *UserRepo) ListUsers() ([]models.UserDTO, error) {
+func (u *UserRepo) List() ([]models.UserDTO, error) {
 	var users []models.UserDTO
 	query := `SELECT id, email FROM users `
 	err := u.Postgres.Select(&users, query)

@@ -1,7 +1,7 @@
 package main
 
 import (
-	"MSHUGO/auth/internal/grpc/auth"
+	"auth/internal/grpc/auth"
 	authpr "github.com/fapcon/MSHUGOprotos/protos/auth/gen"
 	"google.golang.org/grpc"
 	"log"

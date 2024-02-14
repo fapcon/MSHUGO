@@ -3,7 +3,7 @@ version: '3'
 services:
   hugo:
     image: klakegg/hugo:0.101.0-ext-alpine
-    container_name: hugoco
+    container_name: hugoct
     command: server
     entrypoint: hugo
     volumes:
@@ -14,7 +14,7 @@ services:
       - mylocal
   app:
     build: ./proxy
-    container_name: proxyco
+    container_name: proxyct
     volumes:
       - "./hugo/content:/app/static"
     ports:
@@ -23,17 +23,17 @@ services:
       - mylocal
   auth:
     build: ./auth
-    container_name: authco
+    container_name: authct
     networks:
       - mylocal
   geo:
     build: ./geo
-    container_name: geoco
+    container_name: geoct
     networks:
       - mylocal
   user:
     build: ./user
-    container_name: userco
+    container_name: userct
     networks:
       - mylocal
     depends_on:

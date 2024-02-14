@@ -1,7 +1,7 @@
 package main
 
 import (
-	"MSHUGO/geo/internal/grpc/geo"
+	"geo/internal/grpc/geo"
 	geopr "github.com/fapcon/MSHUGOprotos/protos/geo/gen"
 	"google.golang.org/grpc"
 	"log"

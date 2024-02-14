@@ -9,7 +9,7 @@ import (
 
 type ClientUser struct{}
 
-func (c *ClientUser) CallCreateUser(ctx context.Context, req *userpr.CreateRequest) (*userpr.CreateResponse, error) {
+func (c *ClientUser) CallCreate(ctx context.Context, req *userpr.CreateRequest) (*userpr.CreateResponse, error) {
 	conn, err := grpc.Dial("user:50053", grpc.WithInsecure())
 	if err != nil {
 		log.Fatal("err connect grpc:", err)
@@ -24,7 +24,7 @@ func (c *ClientUser) CallCreateUser(ctx context.Context, req *userpr.CreateReque
 	return res, nil
 }
 
-func (c *ClientUser) CallCheckUser(ctx context.Context, req *userpr.CheckRequest) (*userpr.CheckResponse, error) {
+func (c *ClientUser) CallCheck(ctx context.Context, req *userpr.CheckRequest) (*userpr.CheckResponse, error) {
 	conn, err := grpc.Dial("user:50053", grpc.WithInsecure())
 	if err != nil {
 		log.Fatal("err connect grpc:", err)
@@ -39,7 +39,7 @@ func (c *ClientUser) CallCheckUser(ctx context.Context, req *userpr.CheckRequest
 	return res, nil
 }
 
-func (c *ClientUser) CallProfileUser(ctx context.Context, req *userpr.ProfileRequest) (*userpr.ProfileResponse, error) {
+func (c *ClientUser) CallProfile(ctx context.Context, req *userpr.ProfileRequest) (*userpr.ProfileResponse, error) {
 	conn, err := grpc.Dial("user:50053", grpc.WithInsecure())
 	if err != nil {
 		log.Fatal("err connect grpc:", err)

@@ -1,7 +1,7 @@
 package auth
 
 import (
-	"MSHUGO/auth/internal/service"
+	"auth/internal/service"
 	"context"
 	authpr "github.com/fapcon/MSHUGOprotos/protos/auth/gen"
 	"log"
@@ -37,7 +37,7 @@ func (s *ServiceAuth) Login(ctx context.Context, req *authpr.LoginRequest) (*aut
 	return &authpr.LoginResponse{Token: token}, nil
 }
 
-func (s *ServiceAuth) ItsValid(ctx context.Context, req *authpr.ValidRequest) (*authpr.ValidResponse, error) {
+func (s *ServiceAuth) IsValid(ctx context.Context, req *authpr.ValidRequest) (*authpr.ValidResponse, error) {
 	isvalid, err := s.auths.ItsValid(req.Token)
 	if err != nil {
 		log.Println("err:", err)

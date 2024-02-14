@@ -1,7 +1,7 @@
 package service
 
 import (
-	"MSHUGO/auth/internal/grpc/grpcclients"
+	"auth/internal/grpc/grpcclients"
 	"context"
 	userpr "github.com/fapcon/MSHUGOprotos/protos/user/gen"
 	"github.com/golang-jwt/jwt"
@@ -17,7 +17,7 @@ type AuthService struct {
 
 func (a *AuthService) Register(email, hashedpassword string) (string, error) {
 
-	mess, err := a.clientUser.CallCreateUser(context.Background(), &userpr.CreateRequest{
+	mess, err := a.clientUser.CallCreate(context.Background(), &userpr.CreateRequest{
 		Email:          email,
 		Hashedpassword: hashedpassword,
 	})
@@ -30,7 +30,7 @@ func (a *AuthService) Register(email, hashedpassword string) (string, error) {
 
 func (a *AuthService) Login(email, password string) (string, error) {
 
-	_, err := a.clientUser.CallCheckUser(context.Background(), &userpr.CheckRequest{
+	_, err := a.clientUser.CallCheck(context.Background(), &userpr.CheckRequest{
 		Email:    email,
 		Password: password,
 	})

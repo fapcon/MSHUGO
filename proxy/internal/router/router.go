@@ -1,9 +1,6 @@
 package router
 
 import (
-	"MSHUGO/proxy/internal/controller/auth"
-	"MSHUGO/proxy/internal/controller/geo"
-	"MSHUGO/proxy/internal/controller/user"
 	"context"
 	"fmt"
 	"github.com/go-chi/chi/v5"
@@ -12,10 +9,13 @@ import (
 	"net/http"
 	"net/http/httputil"
 	"net/url"
+	"proxy/internal/controller/auth"
+	"proxy/internal/controller/geo"
+	"proxy/internal/controller/user"
 	"strings"
 )
 
-func StRout(geohand *geo.HandleGeo, authhand *auth.HandleAuth, userhand *user.HandleUser) *chi.Mux {
+func Route(geohand *geo.HandleGeo, authhand *auth.HandleAuth, userhand *user.HandleUser) *chi.Mux {
 
 	r := chi.NewRouter()
 
@@ -27,9 +27,9 @@ func StRout(geohand *geo.HandleGeo, authhand *auth.HandleAuth, userhand *user.Ha
 	r.Post("/api/register", authhand.Register)
 
 	r.Group(func(r chi.Router) {
-		r.Use(TokenValidationMiddleware)
-		r.Get("/api/profile", userhand.ProfileUser)
-		r.Get("/api/list", userhand.ListUsers)
+		//r.Use(TokenValidationMiddleware)
+		r.Get("/api/profile", userhand.Profile)
+		r.Get("/api/list", userhand.List)
 		r.Post("/api/address/search", geohand.SearchHandle)
 		r.Post("/api/address/geocode", geohand.GeocodeHandle)
 	})

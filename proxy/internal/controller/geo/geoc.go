@@ -1,7 +1,6 @@
 package geo
 
 import (
-	"MSHUGO/proxy/internal/grpc/grpcclient"
 	"context"
 	"encoding/json"
 	"fmt"
@@ -9,6 +8,7 @@ import (
 	"github.com/redis/go-redis/v9"
 	"log"
 	"net/http"
+	"proxy/internal/grpc/grpcclient"
 	"time"
 )
 
@@ -17,7 +17,7 @@ type HandleGeo struct {
 	redisClient *redis.Client
 }
 
-func NewHandGeo(clientGeo *grpcclient.ClientGeo) *HandleGeo {
+func NewHandleGeo(clientGeo *grpcclient.ClientGeo) *HandleGeo {
 	redcl := redis.NewClient(&redis.Options{
 		Addr: "redis:6379",
 	})
@@ -44,7 +44,7 @@ func (h *HandleGeo) SearchHandle(w http.ResponseWriter, r *http.Request) {
 	data, err := h.redisClient.Get(context.Background(), cacheKey).Result()
 	if err == redis.Nil {
 
-		address, err := h.grpcClient.CallSearchAddress(context.Background(), req)
+		address, err := h.grpcClient.CallSearch(context.Background(), req)
 		if err != nil {
 			http.Error(w, "err Call GRPC", http.StatusInternalServerError)
 			return
@@ -84,7 +84,7 @@ func (h *HandleGeo) GeocodeHandle(w http.ResponseWriter, r *http.Request) {
 	data, err := h.redisClient.Get(context.Background(), cacheKey).Result()
 	if err == redis.Nil {
 		// Данных нет в кеше, выполняем запрос к gRPC сервису
-		address, err := h.grpcClient.CallGeocodeAddress(context.Background(), req)
+		address, err := h.grpcClient.CallGeocode(context.Background(), req)
 		if err != nil {
 			http.Error(w, "err Call GRPC", http.StatusInternalServerError)
 			return
@@ -93,7 +93,7 @@ func (h *HandleGeo) GeocodeHandle(w http.ResponseWriter, r *http.Request) {
 		var addrcache []byte
 		addrcache = address.Data
 		if err != nil {
-			log.Println("adrBts err marsh")
+			log.Println("adr err marsh")
 		}
 		h.redisClient.Set(context.Background(), cacheKey, addrcache, 20*time.Second)
 

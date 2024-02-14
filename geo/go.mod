@@ -1,4 +1,4 @@
-module MSHUGO/geo
+module geo
 
 go 1.19
 

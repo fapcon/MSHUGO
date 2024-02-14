@@ -1,12 +1,12 @@
 package auth
 
 import (
-	"MSHUGO/proxy/internal/grpc/grpcclient"
 	"context"
 	authpr "github.com/fapcon/MSHUGOprotos/protos/auth/gen"
 	"golang.org/x/crypto/bcrypt"
 	"log"
 	"net/http"
+	"proxy/internal/grpc/grpcclient"
 )
 
 type HandleAuth struct {
@@ -18,11 +18,11 @@ func NewHandleAuth(clientAuth *grpcclient.ClientAuth) *HandleAuth {
 }
 
 func (h *HandleAuth) Register(w http.ResponseWriter, r *http.Request) {
-	email := "@example"
-	password := "1234"
+	email := "qwer"
+	password := "asdf"
 	hashepassword, err := bcrypt.GenerateFromPassword([]byte(password), bcrypt.DefaultCost)
 	if err != nil {
-		log.Println("err generate hashepassword")
+		log.Println("err generate hashedpassword")
 	}
 
 	req := &authpr.RegisterRequest{
@@ -40,8 +40,8 @@ func (h *HandleAuth) Register(w http.ResponseWriter, r *http.Request) {
 }
 
 func (h *HandleAuth) Login(w http.ResponseWriter, r *http.Request) {
-	email := "@example"
-	password := "1234"
+	email := "qwer"
+	password := "asdf"
 
 	req := &authpr.LoginRequest{
 		Email:    email,

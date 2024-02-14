@@ -1,9 +1,9 @@
 package service
 
 import (
-	"MSHUGO/geo/internal/models"
 	"encoding/json"
 	"fmt"
+	"geo/internal/models"
 	"io"
 	"log"
 	"net/http"
@@ -13,7 +13,7 @@ import (
 type GeoService struct {
 }
 
-func (g *GeoService) GeoSearch(input string) ([]byte, error) {
+func (g *GeoService) Search(input string) ([]byte, error) {
 	var data = strings.NewReader(fmt.Sprintf("[ \"%s\" ]", input))
 
 	req, err := http.NewRequest("POST", "https://cleaner.dadata.ru/api/v1/clean/address", data)
@@ -22,8 +22,8 @@ func (g *GeoService) GeoSearch(input string) ([]byte, error) {
 	}
 	req.Header.Set("Content-Type", "application/json")
 	req.Header.Set("Accept", "application/json")
-	req.Header.Set("Authorization", "Token "+"5086f9aa3d01c20cab4d1477df59cb0f1ab75497")
-	req.Header.Set("X-Secret", "01c3fde0996a6e08e1d51d5203c57cdb211739b2")
+	req.Header.Set("Authorization", "Token "+"cd6b57c7195fe08a623d3ab0bd8b398256163779")
+	req.Header.Set("X-Secret", "51aae3bef5d26db8afb51fcc0c36c84c9aa79209")
 	client := http.Client{}
 	resp, err := client.Do(req)
 	if err != nil {
@@ -39,7 +39,7 @@ func (g *GeoService) GeoSearch(input string) ([]byte, error) {
 	var adrs models.AddressSearch
 	err = json.Unmarshal(body, &adrs)
 	if err != nil {
-		log.Println("err unmarshal ")
+		log.Println("err unmarshal Q")
 	}
 
 	var pr models.ResponseAddress
@@ -64,7 +64,7 @@ func (g *GeoService) GeoSearch(input string) ([]byte, error) {
 	return addresses, nil
 }
 
-func (g *GeoService) GeoCode(lat, lng string) ([]byte, error) {
+func (g *GeoService) Geocode(lat, lng string) ([]byte, error) {
 	var data = strings.NewReader(fmt.Sprintf("{ \"lat\":%s, \"lon\":%s }", lat, lng))
 	req, err := http.NewRequest("POST", "https://suggestions.dadata.ru/suggestions/api/4_1/rs/geolocate/address", data)
 	if err != nil {
@@ -72,7 +72,7 @@ func (g *GeoService) GeoCode(lat, lng string) ([]byte, error) {
 	}
 	req.Header.Set("Content-Type", "application/json")
 	req.Header.Set("Accept", "application/json")
-	req.Header.Set("Authorization", "Token 24133541982a4f8baa0497ac37c7661de6598b13")
+	req.Header.Set("Authorization", "Token cd6b57c7195fe08a623d3ab0bd8b398256163779")
 
 	client := http.Client{}
 	resp, err := client.Do(req)

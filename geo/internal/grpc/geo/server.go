@@ -1,16 +1,16 @@
 package geo
 
 import (
-	"MSHUGO/geo/internal/grpc/grpcclients"
-	"MSHUGO/geo/internal/service"
 	"context"
 	"fmt"
+	"geo/internal/grpc/grpcclients"
+	"geo/internal/service"
 	geopr "github.com/fapcon/MSHUGOprotos/protos/geo/gen"
 )
 
 type Geo interface {
-	GeoSearch(input string) ([]byte, error)
-	GeoCode(lat, lng string) ([]byte, error)
+	Search(input string) ([]byte, error)
+	Geocode(lat, lng string) ([]byte, error)
 }
 
 type ServerGeo struct {
@@ -19,9 +19,9 @@ type ServerGeo struct {
 	geo service.GeoService
 }
 
-func (s *ServerGeo) SearchAddress(context context.Context, req *geopr.SearchRequest) (*geopr.SearchResponse, error) {
+func (s *ServerGeo) Search(context context.Context, req *geopr.SearchRequest) (*geopr.SearchResponse, error) {
 
-	address, err := s.geo.GeoSearch(req.Input)
+	address, err := s.geo.Search(req.Input)
 	if err != nil {
 		return nil, fmt.Errorf("err service:%v", err)
 	}
@@ -29,8 +29,8 @@ func (s *ServerGeo) SearchAddress(context context.Context, req *geopr.SearchRequ
 	return &geopr.SearchResponse{Data: address}, nil
 }
 
-func (s *ServerGeo) GeocodeAddress(context context.Context, req *geopr.GeocodeRequest) (*geopr.GeocodeResponse, error) {
-	address, err := s.geo.GeoCode(req.Lat, req.Lon)
+func (s *ServerGeo) Geocode(context context.Context, req *geopr.GeocodeRequest) (*geopr.GeocodeResponse, error) {
+	address, err := s.geo.Geocode(req.Lat, req.Lon)
 	if err != nil {
 		return nil, fmt.Errorf("err service:%v", err)
 	}
