@@ -51,7 +51,6 @@ services:
     networks:
       - mylocal
 
-
 networks:
   mylocal:
     driver: bridge

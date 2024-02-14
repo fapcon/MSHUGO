@@ -46,7 +46,7 @@ func main() {
 
 	serviceUser := user.NewServiceUser(userService)
 
-	lis, err := net.Listen("tcp", ":50053")
+	lis, err := net.Listen("tcp", ":44971")
 	if err != nil {
 		log.Fatalf("Failed to listen on port %s: %v", "50053", err)
 	}

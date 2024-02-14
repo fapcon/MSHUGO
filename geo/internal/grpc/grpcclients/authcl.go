@@ -10,7 +10,7 @@ import (
 type ClientAuth struct{}
 
 func (c *ClientAuth) CallIsValid(ctx context.Context, req *authpr.ValidRequest) (*authpr.ValidResponse, error) {
-	conn, err := grpc.Dial("auth:50052", grpc.WithInsecure())
+	conn, err := grpc.Dial("auth:44972", grpc.WithInsecure())
 	if err != nil {
 		log.Println("err:", err)
 		return nil, err

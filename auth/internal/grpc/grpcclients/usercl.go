@@ -10,7 +10,7 @@ import (
 type ClientUser struct{}
 
 func (c *ClientUser) CallCreate(ctx context.Context, req *userpr.CreateRequest) (*userpr.CreateResponse, error) {
-	conn, err := grpc.Dial("user:50053", grpc.WithInsecure())
+	conn, err := grpc.Dial("user:44971", grpc.WithInsecure())
 	if err != nil {
 		log.Fatal("err connect grpc:", err)
 	}
@@ -25,7 +25,7 @@ func (c *ClientUser) CallCreate(ctx context.Context, req *userpr.CreateRequest) 
 }
 
 func (c *ClientUser) CallCheck(ctx context.Context, req *userpr.CheckRequest) (*userpr.CheckResponse, error) {
-	conn, err := grpc.Dial("user:50053", grpc.WithInsecure())
+	conn, err := grpc.Dial("user:44971", grpc.WithInsecure())
 	if err != nil {
 		log.Fatal("err connect grpc:", err)
 	}
@@ -40,7 +40,7 @@ func (c *ClientUser) CallCheck(ctx context.Context, req *userpr.CheckRequest) (*
 }
 
 func (c *ClientUser) CallProfile(ctx context.Context, req *userpr.ProfileRequest) (*userpr.ProfileResponse, error) {
-	conn, err := grpc.Dial("user:50053", grpc.WithInsecure())
+	conn, err := grpc.Dial("user:44971", grpc.WithInsecure())
 	if err != nil {
 		log.Fatal("err connect grpc:", err)
 	}

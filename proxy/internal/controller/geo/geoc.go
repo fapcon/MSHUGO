@@ -29,7 +29,7 @@ func NewHandleGeo(clientGeo *grpcclient.ClientGeo) *HandleGeo {
 }
 
 func (h *HandleGeo) SearchHandle(w http.ResponseWriter, r *http.Request) {
-	fmt.Println("sear run")
+	fmt.Println("search run")
 	req := &geopr.SearchRequest{}
 	err := json.NewDecoder(r.Body).Decode(&req)
 	if err != nil {

@@ -9,7 +9,7 @@ import (
 )
 
 func main() {
-	listen, err := net.Listen("tcp", ":50052")
+	listen, err := net.Listen("tcp", ":44972")
 	if err != nil {
 		log.Fatalf("Ошибка при прослушивании порта: %v", err)
 	}

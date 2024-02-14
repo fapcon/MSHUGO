@@ -14,7 +14,7 @@ func NewClientAuth() *ClientAuth {
 }
 
 func (c *ClientAuth) CallRegister(ctx context.Context, req *authpr.RegisterRequest) (*authpr.RegisterResponse, error) {
-	conn, err := grpc.Dial("auth:50052", grpc.WithInsecure())
+	conn, err := grpc.Dial("auth:44972", grpc.WithInsecure())
 	if err != nil {
 		log.Fatalf("Ошибка при подключении к серверу: %v", err)
 		return nil, err
@@ -33,7 +33,7 @@ func (c *ClientAuth) CallRegister(ctx context.Context, req *authpr.RegisterReque
 }
 
 func (c *ClientAuth) CallLogin(ctx context.Context, req *authpr.LoginRequest) (*authpr.LoginResponse, error) {
-	conn, err := grpc.Dial("auth:50052", grpc.WithInsecure())
+	conn, err := grpc.Dial("auth:44972", grpc.WithInsecure())
 	if err != nil {
 		log.Fatalf("Ошибка при подключении к серверу: %v", err)
 		return nil, err
